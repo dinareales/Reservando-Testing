@@ -60,4 +60,33 @@ describe('Testeamos que al realizar una calificación, se ingrese un valor corre
     })
 })
 
-describe('Testeamos')
+describe('Buscar un restaurante', function() {
+	// el listado de los restaurantes va desde el id 1 al 24
+    it('Dado un listado de restaurantes, al buscar el restaurante con id 1, se obtiene el restaurante correcto', function() {
+        var restaurant = listado.buscarRestaurante(1)
+        expect(restaurant.id).to.equal(1);
+    })
+    it('Dado un listado de restaurantes, al buscar el restaurante con id 0, no se encuentra ningun restaurante', function() {
+        var restaurant = listado.buscarRestaurante(0)
+        expect(restaurant).to.equal('No se ha encontrado ningún restaurant');
+    })
+    it('Dado un listado de restaurantes, al buscar el restaurante con id negativo,  no se encuentra ningun restaurante', function() {
+        var restaurant = listado.buscarRestaurante(-4)
+        expect(restaurant).to.equal('No se ha encontrado ningún restaurant');
+    })
+    it('Dado un listado de restaurantes, al buscar el restaurante con id decimal,  no se encuentra ningun restaurante', function() {
+        var restaurant = listado.buscarRestaurante(7.6)
+        expect(restaurant).to.equal('No se ha encontrado ningún restaurant');
+    })
+    it('Dado un listado de restaurantes, al buscar el restaurante con id mayor a 24,  no se encuentra ningun restaurant', function() {
+        var restaurant = listado.buscarRestaurante(25)
+        expect(restaurant).to.equal('No se ha encontrado ningún restaurant');
+    })
+})
+
+describe('Filtrar el listado de restaurantes', function() {
+    it('Dado un listado con 24 restaurantes, si no se aplica ningún filtro, se obtiene como resultado 24 restaurantes', function() {
+        var restaurantesFiltrados = listado.obtenerRestaurantes(null, null, null)
+        expect(restaurantesFiltrados.length).to.equal(24);
+    })
+})
