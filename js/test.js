@@ -1,5 +1,6 @@
 var expect = chai.expect;
 var restaurant = new Restaurant(14, "TGood Seed Salads & Market", "Ensalada", "Nueva York", ["17:00", "19:00", "22:30"], "../img/ensalada4.jpg", [8, 8, 8, 8, 5, 7]);
+var reserva = new Reserva(new Date(2018, 7, 24, 11, 40), 8, 350, "DES1");
 
 describe('Testeamos la reserva de horarios', function(){
 	beforeEach(function(){
@@ -88,5 +89,51 @@ describe('Filtrar el listado de restaurantes', function() {
     it('Dado un listado con 24 restaurantes, si no se aplica ningún filtro, se obtiene como resultado 24 restaurantes', function() {
         var restaurantesFiltrados = listado.obtenerRestaurantes(null, null, null)
         expect(restaurantesFiltrados.length).to.equal(24);
+    })
+})
+
+//Requerimientos
+describe('Testeamos que la reserva se crea con datos validos', function(){
+    it('Dado un horario verificamos que sea de tipo date',function(){
+        expect(reserva.horario.constructor).to.equal(Date);
+    })
+    it('Dado una cantidad de personas, verificamos que se ingrese un numero entero',function(){
+        var numeroEntero = Number.isInteger(reserva.cantidadDePersonas);
+        expect(numeroEntero).to.equal(true);
+    })
+    it('Dado el precio, verificamos que se ingrese un numero entero',function(){
+        var numeroEntero = Number.isInteger(reserva.precioPersona);
+        expect(numeroEntero).to.equal(true);
+    })
+    it('Dado un codigo de descuento verificamos que se ingrese un string',function(){
+        var codigoString = typeof(reserva.codigoDescuento);
+        expect(codigoString).to.equal('string');
+    })
+})
+
+describe('Testeamos que los precios de la reserva se calculen correctamente.', function(){
+    it('Testeamos que el precio base (2800) se calcula correctamente', function(){
+        var precioBase = reserva.calcularPrecioBase();
+        expect(precioBase).to.equal(2800);
+    })
+    it('Se calcula correctamente el descuento del 10% para grupos grandes', function(){
+        var descuentoParaGruposGrandes = reserva.descuentoParaGruposGrandes();
+        expect(descuentoParaGruposGrandes).to.equal(420);
+    })
+    it('Se calcula correctamente el descuento para el cupon DES1', function(){
+        var descuentoPorCupon = reserva.descuentoPorCupon();
+        expect(descuentoPorCupon).to.equal(350);
+    })
+    it('Se calcula correctamente el adicional por horario.', function(){
+        var adicionalPorHorario = reserva.adicionalPorHorario();
+        expect(adicionalPorHorario).to.equal(0);
+    })
+    it('Se calcula correctamente el adicional por dia.', function(){
+        var adicionalPorDia = reserva.adicionalPorDia();
+        expect(adicionalPorDia).to.equal(280);
+    })
+    it('Se calcula correctamente el precio final de la reserva.', function(){
+        var precioFinal = reserva.precioFinal();
+        expect(precioFinal).to.equal(2310);
     })
 })
