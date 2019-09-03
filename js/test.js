@@ -116,7 +116,7 @@ describe('Testeamos que los precios de la reserva se calculen correctamente.', f
         var precioBase = reserva.calcularPrecioBase();
         expect(precioBase).to.equal(2800);
     })
-    it('Se calcula correctamente el codigo de descuento para grupos grandes', function(){
+    it('Se calcula correctamente el descuento para grupos grandes', function(){
         var descuentoParaGruposGrandes = reserva.descuentoParaGruposGrandes();
         expect(descuentoParaGruposGrandes).to.equal(420);
     })
